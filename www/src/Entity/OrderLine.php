@@ -18,7 +18,7 @@ class OrderLine
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orderLines")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 

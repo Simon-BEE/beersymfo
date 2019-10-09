@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Service\MailService;
+use App\Service\TokenService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,8 @@ class RegistrationController extends AbstractController
     public function register(
         Request $request, 
         UserPasswordEncoderInterface $passwordEncoder,
-        MailService $mail): Response
+        MailService $mail,
+        TokenService $token): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -34,7 +36,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             )
-            ->setToken($this->generateToken());
+            ->setToken($token->generateToken());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -78,13 +80,5 @@ class RegistrationController extends AbstractController
         }
 
         return $this->redirectToRoute('security_login');
-    }
-
-    /**
-     * Generate a random security token only
-     */
-    private function generateToken()
-    {
-        return rtrim(strtr(base64_encode(random_bytes(32)), '/+', '-_'), '=');
     }
 }

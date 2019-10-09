@@ -44,6 +44,8 @@ class CartController extends AbstractController
             return $this->redirectToRoute('cart_index');
         }
 
+        //dd($session->remove('cart'));
+
         if (!$this->getUser()) {
             $this->addFlash('error', 'Veuillez vous connecter avant de procéder à la commande');
             return $this->redirectToRoute('security_login');
