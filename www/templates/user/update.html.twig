@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<div class="breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home')}}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('user_profile')}}">Votre profil</a></li>
+        <li class="breadcrumb-item active">{{title}}</li>
+    </ol>
+    <div class="d-flex justify-content-between">
+        <h1>{{ title }}</h1>
+    </div>
+</div>
+
+{{ form_start(form) }}
+
+    {{ form_row(form.email, {
+        'label': 'Votre adresse email'
+    }) }}
+
+    {{ form_row(form.old_password, {
+        'label': 'Votre ancien mot de passe'
+    }) }}
+
+    {{ form_row(form.password.first, {
+        'label': 'Votre nouveau mot de passe'
+    }) }}
+
+    {{ form_row(form.password.second, {
+        'label': 'Confirmer votre nouveau mot de passe'
+    }) }}
+
+    <div class="form_control">
+        <button type="submit" class="btn btn-primary">Editer</button>
+    </div>
+
+{{ form_end(form) }}
+
+
+
+{% endblock %}

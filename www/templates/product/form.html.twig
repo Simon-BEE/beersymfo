@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<div class="breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home')}}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('product_index')}}">Nos produits</a></li>
+        <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+    <div class="d-flex justify-content-between">
+        <h1>{{ title }}</h1>
+    </div>
+</div>
+
+<div class="w-100">
+    {{ form_start(form) }}
+
+        {{ form_row(form.name, {'label': 'Titre du produit'}) }}
+        {{ form_row(form.image, {'label': 'Url de l\'image'}) }}
+        {{ form_row(form.description, {'label': 'Description du produit'}) }}
+        {{ form_row(form.price, {'label': 'Prix hors-taxes du produit'}) }}
+
+        <button type="submit" class="btn btn-success">Sauvegarder</button>
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{{ form_start(form) }}
+
+    {{ form_row(form.firstname, {
+        'label': 'Prénom'
+    }) }}
+
+    {{ form_row(form.lastname, {
+        'label': 'Nom de famille'
+    }) }}
+
+    {{ form_row(form.phone, {
+        'label': 'Numéro de téléphone'
+    }) }}
+
+    {{ form_row(form.address, {
+        'label': 'Adresse'
+    }) }}
+
+    {{ form_row(form.zipcode, {
+        'label': 'Code postal'
+    }) }}
+
+    {{ form_row(form.city, {
+        'label': 'Ville'
+    }) }}
+
+    {{ form_row(form.country, {
+        'label': 'Pays'
+    }) }}
+
+    {{ form_row(form.is_default, {
+        'label': 'Adresse par défault'
+    }) }}
+    
+    <button class="btn btn-primary">Enregistrer</button>
+{{ form_end(form) }}

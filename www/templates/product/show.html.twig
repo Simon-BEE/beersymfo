@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<div class="breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home')}}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('product_index')}}">Nos produits</a></li>
+        <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+    <div class="d-flex justify-content-between">
+        <h1>{{ title }}</h1>
+        <p>
+            <a href="{{ path('product_edit', {'id':product.id}) }}" class="btn btn-primary">Editer le produit</a>
+            <a href="{{path('product_delete', {'id':product.id}) }}" class="btn btn-danger" id="delete">Supprimer</a>
+        </p>
+    </div>
+</div>
+
+<div class="w-100">
+    
+    <h2>{{ product.name }}</h2>
+    <p class="d-flex justify-content-center"><img src="{{ product.image }}" alt="{{ product.name }} image" style="height: 300px; width: 100px; display: block;"></p>
+    <p>{{ product.description }}</p>
+
+    <div class="d-flex justify-content-between">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-outline-secondary">{{ product.price }}€ HT</button>
+            <button type="button" class="btn btn-outline-secondary">{{ product.price * 1.2}}€ TTC</button>
+        </div>
+        <p><a href="{{path('cart_add', {'id' : product.id})}}" class="btn btn-outline-info">Ajouter au panier</a></p>
+    </div>
+
+</div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    document.getElementById("delete").addEventListener("click", function(e) {
+        if (confirm("Etes-vous sur de vouloir supprimer ce produit ?")) {
+            console.log('ok');
+        }else{
+            e.preventDefault();
+        }
+    });
+</script>
+{% endblock %}

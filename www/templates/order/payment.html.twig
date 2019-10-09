@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<div class="breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home')}}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('product_index')}}">Nos produits</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('cart_index') }}">Votre panier</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('cart_validation') }}">Valider votre panier</a></li>
+        <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+    <div class="d-flex justify-content-between">
+        <h1>{{ title }}</h1>
+    </div>
+</div>
+
+<div class="mt-5">
+    Page de paiement provisoire
+</div>
+
+<p class="text-right"><a href="{{ path('order_confirmation') }}" class="btn btn-primary">Payer</a></p>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

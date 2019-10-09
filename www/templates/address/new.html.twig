@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="breadcrumb-container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('user_profile') }}">Votre profil</a></li>
+            <li class="breadcrumb-item active">{{ title }}</li>
+        </ol>
+        <div class="d-flex justify-content-between">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+
+    {{ include('address/_form.html.twig') }}
+
+{% endblock %}

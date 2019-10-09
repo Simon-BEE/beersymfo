@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<div class="breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home')}}">Accueil</a></li>
+        <li class="breadcrumb-item active">Votre profil</li>
+    </ol>
+    <div class="d-flex justify-content-between">
+        <h1>{{ title }}</h1>
+        <div class="">
+            <a href="{{ path('user_update') }}" class="btn btn-primary">Editer votre profil</a>
+            <a href="{{ path('address_new') }}" class="btn btn-primary">Ajouter une adresse</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus, incidunt. Voluptatibus, qui incidunt inventore repellendus aperiam voluptatum porro, laborum ad minima repellat fugit debitis id quod aut similique doloremque molestiae saepe ratione corporis laboriosam officia commodi. Corrupti temporibus iure pariatur vero eum unde harum in, ratione sit dolore sunt tempora, eius nihil voluptatum modi dolores facere autem hic. Nemo dolorum eaque dolor expedita provident natus autem amet temporibus voluptas ex iure placeat inventore illo nobis explicabo dignissimos minima impedit odio, vitae similique dolorem aliquam harum? Voluptas tempora quisquam commodi sequi dignissimos, nesciunt modi dolorem magni.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h2>Vos adresses</h2>
+    </div>
+
+    <div class="col-12 row">
+        {% if addresses %}
+            {% set i = 0 %}
+            {% for address in addresses %}
+                {% set i = i + 1 %}
+                {% include "address/card.html.twig" %}
+            {% endfor %}
+        {% else %}
+            <p>Vous n'avez pas encore ajouté d'adresse ! <a href="{{ path('address_new') }}">Ajoutez en une</a>.</p>
+        {% endif %}
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h2>Vos dernières commandes</h2>
+    </div>
+
+    <div class="col-12 row">
+        {% if addresses %}
+            {% set i = 0 %}
+            {% for address in addresses %}
+                {% set i = i + 1 %}
+                {% include "address/card.html.twig" %}
+            {% endfor %}
+        {% else %}
+            <p>Vous n'avez pas encore ajouté d'adresse ! <a href="{{ path('address_new') }}">Ajoutez en une</a>.</p>
+        {% endif %}
+    </div>
+    
+    <div class="col-12">
+        <p class="text-right"><a href="#">Voir toutes les commandes</a></p>
+    </div>
+    
+</div>
+
+
+{% endblock %}

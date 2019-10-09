@@ -1,0 +1,18 @@
+<div class="col-4 mt-3">
+    <div class="card border-secondary mb-3" style="max-width: 20rem;">
+        <div class="card-header d-flex justify-content-between">Adresse n°{{ i }} <a href="{{ path('address_edit', {'id': address.id}) }}"><i class="fas fa-pencil-alt"></i></a></div>
+        <div class="card-body">
+            <h4 class="card-title">{{ address.firstname }} {{ address.lastname }}</h4>
+            <p class="card-text">{{ address.address }}</p>
+            <p class="card-text">{% if address.zipcode|length == 4 %}0{{ address.zipcode }}{% else %}{{ address.zipcode }}{% endif %} {{ address.city }} {{ address.country }}</p>
+            <p class="card-text text-right">
+                {% if address.isdefault == 1 %}
+                    <i class="far fa-check-circle" title="Adresse sélectionée par défaut"></i>
+                {% else %}
+                    <i class="far fa-times-circle" title="Adresse non-sélectionée par défaut"></i>
+                {% endif %}
+                
+            </p>
+        </div>
+    </div>
+</div>

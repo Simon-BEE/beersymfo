@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<div class="breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home')}}">Accueil</a></li>
+        <li class="breadcrumb-item active">Nos produits</li>
+    </ol>
+    <div class="d-flex justify-content-between">
+        <h1>{{ title }}</h1>
+        {% if is_granted('ROLE_USER') %}
+            <div class=""><a href="{{ path('product_new') }}" class="btn btn-primary">Ajouter un produit</a></div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="display-product row">
+    {% if products %}
+        {% for beer in products %}
+            <div class="col-6">
+                <div class="card mb-3">
+                    <h3 class="card-header">{{ beer.name }}</h3>
+                    <div class="card-body">
+                        <h5 class="card-title">Special {{ beer.name }}</h5>
+                        <h6 class="card-subtitle text-muted">{{ beer.description | slice(0, 20) }}</h6>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img style="height: 300px; width: 100px; display: block;" src="{{ beer.image }}" alt="Card image {{ beer.name }}">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ beer.description | slice(0, 90) }}...</p>
+                    </div>
+                    
+                    <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+                        <p>{{ (beer.price * 1.2) | number_format(2, '.', ',') }}€</p>
+                        <p><a href="{{path('cart_add', {'id' : beer.id})}}" class="btn btn-outline-secondary">Ajouter au panier</a></p>
+                    </div>
+                    <a href="{{ path('product_show', {'id': beer.id })}}" class="card-footer text-muted bg-dark">
+                        Plus d'infos
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="navigation mt-3 w-100 d-flex justify-content-center">
+            {{ knp_pagination_render(products) }}
+        </div>
+    {% else %}
+        <p>Aucun produit à vous proposer</p>
+    {% endif %}
+    
+</div>
+{% endblock %}

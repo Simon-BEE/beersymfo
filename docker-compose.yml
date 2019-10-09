@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: ${CONTAINER_MYSQL}
+    restart: unless-stopped
+    image: mariadb:latest
+    networks:
+      - website
+    env_file:
+      - .env
+
+  app:
+    depends_on:
+      - mysql
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    image: chialab/php-dev:7.3-apache
+    ports:
+      - ${APP_PORT}:80
+    networks:
+      - website
+    volumes:
+      - ${PWD}/www:/var/www
+    env_file:
+      - .env
+
+  mailcatcher:
+    container_name: ${CONTAINER_MAIL}
+    restart: always
+    image: tophfr/mailcatcher
+    ports: 
+      - ${MAIL_PORT}:80
+    networks:
+      - website
+
+networks: 
+  website:
+    driver: bridge
