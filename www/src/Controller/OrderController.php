@@ -75,6 +75,10 @@ class OrderController extends AbstractController
      */
     public function allByUser(User $user, CommandRepository $commandRepository)
     {
+        if (!$this->getUser() || $this->getUser()->getId() !== $user->getId()) {
+            return $this->redirectToRoute('home');
+        }
+        
         return $this->render('order/all.html.twig', [
             'title' => 'Toutes vos commandes',
             'commands' => $commandRepository->findBy(['user' => $user->getId()])

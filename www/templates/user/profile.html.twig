@@ -34,7 +34,7 @@
             {% set i = 0 %}
             {% for address in addresses %}
                 {% set i = i + 1 %}
-                {% include "address/card.html.twig" %}
+                {% include "address/_card.html.twig" %}
             {% endfor %}
         {% else %}
             <p>Vous n'avez pas encore ajouté d'adresse ! <a href="{{ path('address_new') }}">Ajoutez en une</a>.</p>
@@ -49,20 +49,21 @@
     </div>
 
     <div class="col-12 row">
-        {% if addresses %}
-            {% set i = 0 %}
-            {% for address in addresses %}
-                {% set i = i + 1 %}
-                {% include "address/card.html.twig" %}
+        {% if commands %}
+            {% for order in commands %}
+                {% include "order/_card.html.twig" %}
             {% endfor %}
         {% else %}
-            <p>Vous n'avez pas encore ajouté d'adresse ! <a href="{{ path('address_new') }}">Ajoutez en une</a>.</p>
+            <p class="col-12">Vous n'avez pas encore passé de commande !</p>
         {% endif %}
     </div>
     
-    <div class="col-12">
-        <p class="text-right"><a href="{{ path('order_all', {'id': app.user.id }) }}">Voir toutes les commandes</a></p>
-    </div>
+
+    {% if commands %}
+        <div class="col-12">
+            <p class="text-right"><a href="{{ path('order_all', {'id': app.user.id }) }}">Voir toutes les commandes</a></p>
+        </div>
+    {% endif %}
     
 </div>
 

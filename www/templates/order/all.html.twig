@@ -16,16 +16,7 @@
 
 <div class="mt-5 row">
     {% for order in commands %}
-        <div class="col-4 mt-2">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Commande n°{{ order.id }}</h4>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ order.createdAt | date('d/m/Y H:i')}}</h6>
-                    <p class="card-text">{{ (order.price * order.tva) + order.shippingFees}}</p>
-                    <a href="{{ path('order_resume', {'id': order.id }) }}" class="card-link">Plus d'informations</a>
-                </div>
-            </div>
-        </div>
+        {% include "order/_card.html.twig" %}
     {% endfor %}
 </div>
 

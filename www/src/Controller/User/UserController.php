@@ -4,6 +4,7 @@ namespace App\Controller\User;
 
 use App\Form\UserType;
 use App\Repository\AddressRepository;
+use App\Repository\CommandRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,7 @@ class UserController extends AbstractController
     /**
      * @Route("/profile", name="user_profile")
      */
-    public function profile(AddressRepository $addressRepository)
+    public function profile(AddressRepository $addressRepository, CommandRepository $commandRepository)
     {
         if ($this->getUser()->getToken() !== '') {
             $this->addFlash('error', 'Veillez à bien confirmer votre inscription avant de vouloir vous connecter');
@@ -23,10 +24,12 @@ class UserController extends AbstractController
         }
 
         //dd($addressRepository->findBy(['user' => $this->getUser()->getId()]));
+        $commands = $commandRepository->findBy(['user' => $this->getUser()->getId()], ['id' => 'desc'], 3);
 
         return $this->render('user/profile.html.twig', [
             'title' => 'Votre profil',
-            'addresses' => $addressRepository->findBy(['user' => $this->getUser()->getId()])
+            'addresses' => $addressRepository->findBy(['user' => $this->getUser()->getId()]),
+            'commands' => $commands
         ]);
     }
 
