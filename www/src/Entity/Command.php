@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CommandRepository")
  */
-class Order
+class Command
 {
     /**
      * @ORM\Id()
@@ -17,13 +17,13 @@ class Order
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commands")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Address", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Address", inversedBy="commands")
      * @ORM\JoinColumn(nullable=false)
      */
     private $address;
@@ -44,7 +44,7 @@ class Order
     private $shippingFees;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="commands")
      * @ORM\JoinColumn(nullable=false)
      */
     private $status;
@@ -53,6 +53,11 @@ class Order
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
 
     public function getId(): ?int
     {
@@ -139,6 +144,18 @@ class Order
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

@@ -65,13 +65,13 @@ class Address
     private $is_default;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="address")
+     * @ORM\OneToMany(targetEntity="App\Entity\Command", mappedBy="address")
      */
-    private $orders;
+    private $commands;
 
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->commands = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,30 +188,30 @@ class Address
     }
 
     /**
-     * @return Collection|Order[]
+     * @return Collection|Command[]
      */
-    public function getOrders(): Collection
+    public function getCommands(): Collection
     {
-        return $this->orders;
+        return $this->commands;
     }
 
-    public function addOrder(Order $order): self
+    public function addCommand(Command $command): self
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setAddress($this);
+        if (!$this->commands->contains($command)) {
+            $this->commands[] = $command;
+            $command->setAddress($this);
         }
 
         return $this;
     }
 
-    public function removeOrder(Order $order): self
+    public function removeCommand(Command $command): self
     {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
+        if ($this->commands->contains($command)) {
+            $this->commands->removeElement($command);
             // set the owning side to null (unless already changed)
-            if ($order->getAddress() === $this) {
-                $order->setAddress(null);
+            if ($command->getAddress() === $this) {
+                $command->setAddress(null);
             }
         }
 

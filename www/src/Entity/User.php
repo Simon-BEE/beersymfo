@@ -60,14 +60,14 @@ class User implements UserInterface
     private $orderLines;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Command", mappedBy="user")
      */
-    private $orders;
+    private $commands;
 
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
-        $this->orders = new ArrayCollection();
+        $this->commands = new ArrayCollection();
         $this->orderLines = new ArrayCollection();
     }
 
@@ -244,30 +244,30 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Order[]
+     * @return Collection|Command[]
      */
-    public function getOrders(): Collection
+    public function getCommands(): Collection
     {
-        return $this->orders;
+        return $this->commands;
     }
 
-    public function addOrder(Order $order): self
+    public function addCommand(Command $command): self
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setUser($this);
+        if (!$this->commands->contains($command)) {
+            $this->commands[] = $command;
+            $command->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeOrder(Order $order): self
+    public function removeCommand(Command $command): self
     {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
+        if ($this->commands->contains($command)) {
+            $this->commands->removeElement($command);
             // set the owning side to null (unless already changed)
-            if ($order->getUser() === $this) {
-                $order->setUser(null);
+            if ($command->getUser() === $this) {
+                $command->setUser(null);
             }
         }
 

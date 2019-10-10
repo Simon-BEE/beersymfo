@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<div class="breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home')}}">Accueil</a></li>
+        <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+    <div class="d-flex justify-content-between">
+        <h1>{{ title }}</h1>
+    </div>
+</div>
+
+<div class="mt-5">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th colspan="5">Nom du produit</th>
+                <th colspan="1">Quantity</th>
+                <th colspan="1">Prix HT</th>
+                <th colspan="1">Prix TTC</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in orderLines %}
+                <tr>
+                    <td colspan="5"><a href="{{ path('product_show', {'id' : product.product.id }) }}">{{ product.product.name }}</a></td>
+                    <td colspan="1">{{ product.quantity }}</td>
+                    <td colspan="1">{{ product.product.price | number_format(2, ',', '.')}}€</td>
+                    <td colspan="1">{{ (product.product.price * 1.2) | number_format(2, ',', '.')}}€</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="5"></th>
+                <th colspan="1"></th>
+                <th colspan="1"></th>
+                <th colspan="1"></th>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+                <th colspan="1">Frais de port</th>
+                <td colspan="1"></td>
+                <td colspan="1">{% if total < 30 %}4.99€*{% else %}0€{% endif %}</td>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+                <th colspan="1">Total</th>
+                <td colspan="1">{% if total < 30 %}{{ (total + 4.99) | number_format(2, ',', '.')}}{% else %}{{ total | number_format(2, ',', '.')}}{% endif %}€</td>
+                <td colspan="1">{% if total < 30 %}{{ ((total * 1.2) + 4.99) | number_format(2, ',', '.')}}{% else %}{{ (total * 1.2) | number_format(2, ',', '.')}}{% endif %}€</td>
+            </tr>
+        </tfoot>
+    </table> 
+</div>
+
+<div class="mt-5">
+    <p>Votre commande vous sera livré sous 4 jours ouvré, au nom de {{ address.firstname }} {{ address.lastname }} à l'adresse suivante :</p>
+    <p>{{ address.address }} à {{ address.city }} {% if address.zipcode|length == 4 %}0{{ address.zipcode }}{% else %}{{ address.zipcode }}{% endif %} en {{ address.country }}.</p>
+    <p>Numéro de contact : {{ address.phone }}.</p>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

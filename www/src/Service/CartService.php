@@ -54,44 +54,6 @@ class CartService
         $this->session->set('cart', $this->cart);
     }
 
-    private function addInDatabase(int $id)
-    {
-        $product = $this->productRepository->find($id);
-
-        $token = $this->session->get('cart_token', []);
-
-        if ($this->repoOrderLine->findOneBy(['token' => $token, 'product' => $product->getId()])) {
-            $orderLine = $this->repoOrderLine->findOneBy(['token' => $token, 'product' => $product->getId()]);
-        }else{
-            $orderLine = (new OrderLine())->setToken($token);
-        }
-
-
-        if (!$orderLine->getProduct() || $orderLine->getProduct()->getId() !== $product->getId()) {
-            $orderLine->setProduct($product);
-        }
-
-        $orderLine->setQuantity($this->cart[$id])
-            ->setPrice($product->getPrice());
-        //dd($this->user);
-        if ($this->user && !is_string($this->user)) {
-            $orderLine->setUser($this->user);
-        }
-
-        $this->manager->persist($orderLine);
-        $this->manager->flush();
-    }
-
-    private function deleteFromDatabase(int $id)
-    {
-        $product = $this->productRepository->find($id);
-        $token = $this->session->get('cart_token', []);
-        $orderLine = $this->repoOrderLine->findOneBy(['token' => $token, 'product' => $product->getId()]);
-
-        $this->manager->remove($orderLine);
-        $this->manager->flush();
-    }
-
     public function remove(int $id)
     {
         if (!empty($this->cart[$id])) {
@@ -149,6 +111,45 @@ class CartService
         }
 
         return $total;
+    }
+
+    private function addInDatabase(int $id)
+    {
+        $product = $this->productRepository->find($id);
+
+        $token = $this->session->get('cart_token', []);
+
+        // Si une ligne du panier existe avec le même token et le même produit on utilise cette objet sinon on en crée une nouvelle
+        if ($this->repoOrderLine->findOneBy(['token' => $token, 'product' => $product->getId()])) {
+            $orderLine = $this->repoOrderLine->findOneBy(['token' => $token, 'product' => $product->getId()]);
+        }else{
+            $orderLine = (new OrderLine())->setToken($token);
+        }
+
+
+        if (!$orderLine->getProduct() || $orderLine->getProduct()->getId() !== $product->getId()) {
+            $orderLine->setProduct($product);
+        }
+
+        $orderLine->setQuantity($this->cart[$id])
+            ->setPrice($product->getPrice());
+        //dd($this->user);
+        if ($this->user && !is_string($this->user)) {
+            $orderLine->setUser($this->user);
+        }
+
+        $this->manager->persist($orderLine);
+        $this->manager->flush();
+    }
+
+    private function deleteFromDatabase(int $id)
+    {
+        $product = $this->productRepository->find($id);
+        $token = $this->session->get('cart_token', []);
+        $orderLine = $this->repoOrderLine->findOneBy(['token' => $token, 'product' => $product->getId()]);
+
+        $this->manager->remove($orderLine);
+        $this->manager->flush();
     }
 
     private function removeToken()

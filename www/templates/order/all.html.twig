@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<div class="breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home')}}">Accueil</a></li>
+        <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+    <div class="d-flex justify-content-between">
+        <h1>{{ title }}</h1>
+    </div>
+</div>
+
+<div class="mt-5 row">
+    {% for order in commands %}
+        <div class="col-4 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Commande n°{{ order.id }}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ order.createdAt | date('d/m/Y H:i')}}</h6>
+                    <p class="card-text">{{ (order.price * order.tva) + order.shippingFees}}</p>
+                    <a href="{{ path('order_resume', {'id': order.id }) }}" class="card-link">Plus d'informations</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

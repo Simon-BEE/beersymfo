@@ -24,13 +24,13 @@ class Status
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="status")
+     * @ORM\OneToMany(targetEntity="App\Entity\Command", mappedBy="status")
      */
-    private $orders;
+    private $commands;
 
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->commands = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,30 +51,30 @@ class Status
     }
 
     /**
-     * @return Collection|Order[]
+     * @return Collection|Command[]
      */
-    public function getOrders(): Collection
+    public function getCommands(): Collection
     {
-        return $this->orders;
+        return $this->commands;
     }
 
-    public function addOrder(Order $order): self
+    public function addCommand(Command $command): self
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setStatus($this);
+        if (!$this->commands->contains($command)) {
+            $this->commands[] = $command;
+            $command->setStatus($this);
         }
 
         return $this;
     }
 
-    public function removeOrder(Order $order): self
+    public function removeCommand(Command $command): self
     {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
+        if ($this->commands->contains($command)) {
+            $this->commands->removeElement($command);
             // set the owning side to null (unless already changed)
-            if ($order->getStatus() === $this) {
-                $order->setStatus(null);
+            if ($command->getStatus() === $this) {
+                $command->setStatus(null);
             }
         }
 
