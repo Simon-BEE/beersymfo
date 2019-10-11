@@ -3,7 +3,7 @@
         <div class="card-body">
             <h4 class="card-title">Commande n°{{ order.id }}</h4>
             <h6 class="card-subtitle mb-2 text-muted">{{ order.createdAt | date('d/m/Y H:i')}}</h6>
-            <p class="card-text">{{ (order.price * order.tva) + order.shippingFees}}</p>
+            <p class="card-text">{{ ((order.price * order.tva) + order.shippingFees) | number_format(2, ',', '.')}}€</p>
             <a href="{{ path('order_resume', {'id': order.id }) }}" class="card-link">Plus d'informations</a>
         </div>
     </div>

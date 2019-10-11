@@ -86,6 +86,14 @@ class OrderController extends AbstractController
     }
 
     /**
+     * @Route("/order/purge", name="order_purge")
+     */
+    public function purgeDatabase()
+    {
+        // TODO: supprimer toutes les OrderLines non utilisées (donc dans aucune commande)
+    }
+
+    /**
      * @Route("/order/confirmation", name="order_confirmation")
      */
     public function confirmation(CommandRepository $commandRepository)
